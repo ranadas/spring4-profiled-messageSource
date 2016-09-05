@@ -45,6 +45,6 @@ buildscript {
 
 gretty {
     port = 8080
-    contextPath = "/$rootProject.name"
+    contextPath = "/"
     servletContainer = 'jetty9' //tomcat7 or tomcat8
 }

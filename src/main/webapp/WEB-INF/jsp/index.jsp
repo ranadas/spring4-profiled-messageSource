@@ -24,23 +24,25 @@
         <div class="row" align="center">
             <form action=""></form>
             <label for="input1"></label>
-            <input type="text" name="input1" id="input1">
-            <input type="button" name="Save" value="Save">
+            <input type="text" name="input1" id="input1" class="form-control">
+            <input type="button" name="Save" value="Save" class="btn btn-info">
         </div>
     </div>
     <br/>
     <div class="canvas2">
         <div class="row" align="center">
-            <input type="button" id="b1" name="Save1" value="One">
-            <input type="button" id="b2" name="Save2" value="Two">
-            <input type="button" id="b3" name="Save3" value="Three">
+            <input type="button" id="b1" name="Save1" value="One" class="btn btn-primary">
+            <input type="button" id="b2" name="Save2" value="Two" class="btn btn-primary">
+            <input type="button" id="b3" name="Save3" value="Three" class="btn btn-primary">
         </div>
     </div>
     <br/>
     <div class="canvas3" id ="canvas3">
         <div class="row" align="center">
-            <label for="input3"></label>
-            <input type="text" name="input3" id="input3">
+            <div class="col-lg-6">
+                <label for="input3"></label>
+                <input type="text" name="input3" id="input3" class="form-control">
+            </div>
         </div>
     </div>
     <br/>
