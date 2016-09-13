@@ -34,6 +34,17 @@
             <input type="button" id="b1" name="Save1" value="One" class="btn btn-primary">
             <input type="button" id="b2" name="Save2" value="Two" class="btn btn-primary">
             <input type="button" id="b3" name="Save3" value="Three" class="btn btn-primary">
+            <div>
+                <table id="records_table" class="table table-bordered">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>email</th>
+                    </tr>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <br/>
@@ -56,12 +67,35 @@
     $(document).ready(function () {
         console.log("in index js, showing hiding!!");
 
+        $(document).on("click", "button.remove" , function() {
+            //$(this).parent().remove();
+            console.log("%%%%%%  "+$(this).text() + " "+$(this).val());
+        });
+
+        var getJsonAndCreateTable = function () {
+            $.get("datas", function(data, status){
+                console.log("Data: " + data + "\nStatus: " + status);
+
+                $('#records_table tbody').empty();
+                var trHTML = '';
+                var jdATA = JSON.parse(data);
+                $.each(jdATA, function (i, item) {
+                    //trHTML += '<tr><td>' + item.rank + '</td><td>' + item.user + '</td><td>' + item.email + '</td></tr>';
+                    trHTML +="<tr>" + "<td>" + item.rank + "</td><td>" + item.user + "</td><td>" + item.email + "</td>"
+                                    +"<td> <button id=\"edit\" class='remove' value="+item.rank+"> Edit</button></td>"+
+                            +"</tr>";
+                });
+                $('#records_table').append(trHTML);
+
+            });
+        };
+
         $('#b1').click(function (e) {
             dispplayFunction("create");
         });
         $('#b2').click(function (e) {
             dispplayFunction("modify");
-
+            getJsonAndCreateTable();
 
         });
         $('#b3').click(function (e) {
