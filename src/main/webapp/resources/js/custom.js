@@ -3,10 +3,10 @@ $(document).ready(
         console.log("In custom js, declaring globals");
     }
 );
-// funcion to hide & show
+// function to hide & show
 var dispplayFunction = function (eventName) {
     if (eventName === 'create') {
-        console.log(" Showing canvas 3");
+        console.log(" Showing canvas 1");
         $('#canvas1').show();
         $('#canvas3').hide();
         document.getElementById('displaycan').innerHTML = "<strong>Displaying :</strong>" + 'CREATE';
