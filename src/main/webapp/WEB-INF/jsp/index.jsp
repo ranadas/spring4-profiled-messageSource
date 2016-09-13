@@ -53,35 +53,35 @@
 <script src="/resources/js/custom.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(
-            function () {
-                console.log("in index js, showing hiding!!");
+    $(document).ready(function () {
+        console.log("in index js, showing hiding!!");
 
-                $('#b1').click(function(e) {
-                    dispplayFunction("create");
-                });
-                $('#b2').click(function(e) {
-                    dispplayFunction("modify");
-                });
-                $('#b3').click(function(e) {
-                    dispplayFunction("all");
-                });
+        $('#b1').click(function (e) {
+            dispplayFunction("create");
+        });
+        $('#b2').click(function (e) {
+            dispplayFunction("modify");
 
-                var usr = '${user}';
-                var jsonObj = JSON.parse(usr);
-                var currentUser = jsonObj.user;
-                var currentDisplayCanvas = jsonObj.displayCanvas;
-                console.log("Setting " + currentUser);
-                document.getElementById('something').innerHTML = "<strong>Welcome back :</strong>" + currentUser;
 
-                var inp1 = document.getElementById('input1');
-                inp1.value = currentUser;
-                var inp2 = document.getElementById('input3');
-                inp2.value = currentUser;
-                dispplayFunction(currentDisplayCanvas);
-                
-            }
-    );
+        });
+        $('#b3').click(function (e) {
+            dispplayFunction("all");
+        });
+
+        var usr = '${user}';
+        var jsonObj = JSON.parse(usr);
+        var currentUser = jsonObj.user;
+        var currentDisplayCanvas = jsonObj.displayCanvas;
+        console.log("Setting " + currentUser);
+        document.getElementById('something').innerHTML = "<strong>Welcome back :</strong>" + currentUser;
+
+        var inp1 = document.getElementById('input1');
+        inp1.value = currentUser;
+        var inp2 = document.getElementById('input3');
+        inp2.value = currentUser;
+        dispplayFunction(currentDisplayCanvas);
+
+    });
 
 </script>
 </body>
