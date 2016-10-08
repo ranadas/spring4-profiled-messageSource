@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
  */
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = {"pl.dmichalski"})
+@ComponentScan(basePackages = {"pl.dmichalski.bootstrap.controller"})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Override
