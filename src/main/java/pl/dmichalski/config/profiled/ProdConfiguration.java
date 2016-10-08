@@ -33,8 +33,8 @@ public class ProdConfiguration {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.HSQL)
-//                .addScript("db/sql/create-db.sql")
-//                .addScript("db/sql/insert-data.sql")
+                .addScript("db/create-hsql-db.sql")
+//                .addScript("db/insert-data.sql")
                 .build();
         return db;
     }
