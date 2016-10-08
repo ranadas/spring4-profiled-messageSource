@@ -28,6 +28,7 @@ public class LocalWebAppInitialiser implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.setConfigLocation("pl.dmichalski.config");
         context.getEnvironment().setDefaultProfiles("prod");
+        //context.getEnvironment().setActiveProfiles("local");
         return context;
     }
 

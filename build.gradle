@@ -46,5 +46,5 @@ gretty {
     port = 8080
     contextPath = "/"
     servletContainer = 'jetty9' //tomcat7 or tomcat8
-    systemProperty "spring.profiles.active", "dev"
+//    systemProperty "spring.profiles.active", "dev"
 }
