@@ -17,18 +17,23 @@ repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.1'
+    compile "javax.servlet:jstl:1.2"
+
     compile "org.springframework:spring-core:${spring_version}"
     compile "org.springframework:spring-web:${spring_version}"
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
-    compile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version:'2.3.1'
     compile "org.springframework:spring-webmvc:${spring_version}"
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.5'
-    compile "javax.servlet:jstl:1.2"
+    compile "org.springframework:spring-jdbc:${spring_version}"
+
+    compile 'org.slf4j:slf4j-log4j12:1.7.5'
+
     compile "com.google.code.gson:gson:2.7"
-    compile "org.springframework:spring-test:${spring_version}"
 
-    testCompile group: 'junit', name: 'junit', version:'4.+'
+    testCompile "org.springframework:spring-test:${spring_version}"
+    testCompile 'junit:junit:4.+'
 
+    compile "org.hsqldb:hsqldb:2.3.4"
     compile "com.h2database:h2:1.4.192"
 }
 
@@ -46,5 +51,5 @@ gretty {
     port = 8080
     contextPath = "/"
     servletContainer = 'jetty9' //tomcat7 or tomcat8
-//    systemProperty "spring.profiles.active", "dev"
+//    systemProperty "spring.profiles.active", "local"
 }
