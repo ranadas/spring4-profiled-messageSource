@@ -9,14 +9,14 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 /**
  * Created by rdas on 08/10/2016.
  */
-@Profile("dev")
+@Profile("prod")
 @Configuration
-public class DevConfiguration {
+public class QaConfiguration {
 
     @Bean(name = "messageSource")
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames("app-dev");
+        messageSource.setBasenames("app-qa");
         messageSource.setCacheSeconds(5);
         return messageSource;
     }
