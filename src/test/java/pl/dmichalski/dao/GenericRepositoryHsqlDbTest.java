@@ -7,47 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pl.dmichalski.TestH2DbConfig;
+import pl.dmichalski.TestHsqlDbConfig;
 import pl.dmichalski.model.Customer;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
  * Created by rdas on 08/10/2016.
  */
 @ActiveProfiles("prod")
-@ContextConfiguration(classes ={TestH2DbConfig.class})
+@ContextConfiguration(classes ={TestHsqlDbConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class GenericRepositoryHsqlDbTest {
 
     @Autowired
     private GenericRepository genericRepository;
 
-    private Customer customer;
-
     @Before
     public void init() {
-        customer = Customer.builder().name("Rana").version(11).credit(999).build();
     }
 
     @Test
-    public void testPlainJdbcInsert() throws SQLException{
-        long i = genericRepository.saveCompanyPlainJdbc(customer);
-        System.out.println(i);
-    }
-
-    @Test
-    public void testSpringJdbcTemplateInsert() throws SQLException{
-        long i = genericRepository.saveCompanyJdbcTemplate(customer);
-        System.out.println(i);
-
-    }
-
-    @Test
-    public void testSpringNamedTemplateInsert() throws SQLException{
-        long i = genericRepository.saveCompanyNamedParameter(customer);
-        System.out.println(i);
-
+    public void test_1_GetAll() throws SQLException{
+        Optional<List<Customer>> allCustomers = genericRepository.getAllCustomers();
+        assertThat(allCustomers.isPresent(), is(true));
+        assertThat(allCustomers.get().size(), is(1));
     }
 }
