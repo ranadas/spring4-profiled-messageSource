@@ -3,6 +3,7 @@ package pl.dmichalski.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
 import pl.dmichalski.model.Customer;
 
@@ -12,16 +13,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by rdas on 08/10/2016.
  */
 @Repository
 public class GenericRepository {
-    String INSERT_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, ?, ?, ?)";
-    String INSERT_NAMED_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, :version, :name, :credit)";
+    private static final String INSERT_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, ?, ?, ?)";
+    private static final String INSERT_NAMED_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, :version, :name, :credit)";
+    private static final String SELECT_ALL = "SELECT * FROM MBTOOWNER.CUSTOMER";
 
     @Autowired
     private DataSource dataSource;
@@ -70,5 +71,23 @@ public class GenericRepository {
         int update = namedParameterJdbcTemplate.update(INSERT_NAMED_SQL, namedParameters);
         System.out.println(update + " row inserted.");
         return update;
+    }
+
+    public Optional<List<Customer>> getAllCustomers() throws SQLException {
+
+        List<Customer> customers = new ArrayList<>();
+
+        new JdbcTemplate(new SingleConnectionDataSource(dataSource.getConnection(), true))
+                // We can use lambda expressions as RowMappers
+                .query(SELECT_ALL, (rs, rowNum) ->
+                        Customer.builder().customerId(rs.getLong("CUSTOMER_ID"))
+                                .version(rs.getLong("VERSION"))
+                                .name(rs.getString("NAME"))
+                                .credit(rs.getLong("CREDIT"))
+                                .build()
+                )
+                .forEach(c-> customers.add(c));
+
+        return Optional.of(customers);
     }
 }
