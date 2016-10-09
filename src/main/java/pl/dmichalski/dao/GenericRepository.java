@@ -23,6 +23,7 @@ public class GenericRepository {
     private static final String INSERT_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, ?, ?, ?)";
     private static final String INSERT_NAMED_SQL = "INSERT INTO MBTOOWNER.CUSTOMER (CUSTOMER_ID, VERSION, NAME, CREDIT) VALUES (MBTOOWNER.CUSTOMER_SEQ.nextval, :version, :name, :credit)";
     private static final String SELECT_ALL = "SELECT * FROM MBTOOWNER.CUSTOMER";
+    private static final String SELECT_FOR_NAME = "SELECT * FROM MBTOOWNER.CUSTOMER WHERE NAME = ?";
 
     @Autowired
     private DataSource dataSource;
@@ -74,11 +75,10 @@ public class GenericRepository {
     }
 
     public Optional<List<Customer>> getAllCustomers() throws SQLException {
-
         List<Customer> customers = new ArrayList<>();
 
         new JdbcTemplate(new SingleConnectionDataSource(dataSource.getConnection(), true))
-                // We can use lambda expressions as RowMappers
+                // lambda expressions as RowMappers
                 .query(SELECT_ALL, (rs, rowNum) ->
                         Customer.builder().customerId(rs.getLong("CUSTOMER_ID"))
                                 .version(rs.getLong("VERSION"))
@@ -86,7 +86,23 @@ public class GenericRepository {
                                 .credit(rs.getLong("CREDIT"))
                                 .build()
                 )
-                .forEach(c-> customers.add(c));
+                .forEach(c -> customers.add(c));
+        return Optional.of(customers);
+    }
+
+    public Optional<List<Customer>> getCustomersWithNamesLike(String name) throws SQLException {
+        List<Customer> customers = new ArrayList<>();
+
+        new JdbcTemplate(new SingleConnectionDataSource(dataSource.getConnection(), true))
+                //lambda expressions as RowMappers
+                .query(SELECT_FOR_NAME, new Object[]{name}, (rs, rowNum) ->
+                        Customer.builder().customerId(rs.getLong("CUSTOMER_ID"))
+                                .version(rs.getLong("VERSION"))
+                                .name(rs.getString("NAME"))
+                                .credit(rs.getLong("CREDIT"))
+                                .build()
+                )
+                .forEach(c -> customers.add(c));
 
         return Optional.of(customers);
     }
